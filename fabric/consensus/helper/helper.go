@@ -184,7 +184,7 @@ func (h *Helper) ExecTxs(id interface{}, txs []*pb.Transaction) ([]byte, error) 
 
 	succeededTxs, res, ccevents, txerrs, err := chaincode.ExecuteTransactions(context.Background(), chaincode.DefaultChain, txs)
 	
-	//logger.Infof("chaincode.ExecuteTransactions")
+	logger.Infof("chaincode.ExecuteTransactions")
 
 	h.curBatch = append(h.curBatch, succeededTxs...) // TODO, remove after issue 579
 
