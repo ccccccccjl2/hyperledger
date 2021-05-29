@@ -337,8 +337,8 @@ func (instance *pbftCore) recvPrepareClerk(prep *Prepare) error {
 	}
 	
 	//如果是计票员
-	for c,_ := range(instance.clerk){
-		if instance.id == c{
+	//for c,_ := range(instance.clerk){
+		//if instance.id == c{
 			
 			if instance.primary(prep.View) == prep.ReplicaId {
 				logger.Infof("Replica %d received prepare from primary, ignoring", instance.id)
@@ -417,8 +417,8 @@ func (instance *pbftCore) recvPrepareClerk(prep *Prepare) error {
 				
 			}
 		
-		}
-	}
+		//}
+	//}
 	
 	return nil
 }
