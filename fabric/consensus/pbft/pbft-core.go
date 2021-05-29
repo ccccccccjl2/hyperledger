@@ -215,11 +215,11 @@ type pbftCore struct {
 	clerkPrepares []uint64//计票节点存储收到的prepare消息
 	okNum int
 	
-	ifExec int
+	//ifExec int
 	
 	
 	waitedCerts []*msgCert
-	waited int
+	waited int//下一个待提交的区块的下标
 }
 
 type qidx struct {
@@ -1208,7 +1208,7 @@ func (instance *pbftCore) executeOutstanding2(view uint64, seq uint64) {
 		return
 	}*/
 	logger.Infof("Replica %d attempting to executeOutstanding", instance.id)
-	instance.ifExec++
+	//instance.ifExec++
 
 	/*for idx := range instance.certStore {
 		if instance.executeOne(idx) {
