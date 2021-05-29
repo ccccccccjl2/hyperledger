@@ -694,9 +694,9 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 			instance.waitedCerts = append(instance.waitedCerts, cert)
 		}
 	
-	if instance.id == uint64(0){
-		instance.startWaitTimer()
-	}
+	//if instance.id == uint64(0){
+	//	instance.startWaitTimer()
+	//}
 	
 	
 	
