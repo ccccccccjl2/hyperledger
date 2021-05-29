@@ -62,21 +62,22 @@ func NewImpl(consumer consensus.ExecutionConsumer, rawExecutor PartialStack, stp
 func (co *coordinatorImpl) ProcessEvent(event events.Event) events.Event {
 	switch et := event.(type) {
 	case executeEvent:
-		logger.Debug("Executor is processing an executeEvent")
+		logger.DeInfof("Executor is processing an executeEvent")
 		if co.skipInProgress {
 			logger.Error("FATAL programming error, attempted to execute a transaction during state transfer")
 			return nil
 		}
 
 		if !co.batchInProgress {
-			logger.Debug("Starting new transaction batch")
+			logger.Infof("Starting new transaction batch")
 			co.batchInProgress = true
 			err := co.rawExecutor.BeginTxBatch(co)
 			_ = err // TODO This should probably panic, see issue 752
 		}
 
+		logger.Infof("ExecTxs")
 		co.rawExecutor.ExecTxs(co, et.txs)
-
+		logger.Infof("Executed")
 		co.consumer.Executed(et.tag)
 	case commitEvent:
 		logger.Debug("Executor is processing an commitEvent")
