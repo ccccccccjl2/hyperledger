@@ -383,7 +383,7 @@ func newPbftCore(id uint64, config *viper.Viper, consumer innerStack, etf events
 	instance.clerkPrepares = []uint64{}
 	instance.okNum = 0
 	
-	instance.ifExec = 0
+	//instance.ifExec = 0
 	
 	
 	
