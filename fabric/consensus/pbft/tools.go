@@ -605,9 +605,15 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		//instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
 		//instance.executeOutstanding()
 	
+		
+		//instance.waitedCerts = append(instance.waitedCerts)
+		//logger.Warningf("waitedCerts:%v, waited:%v", len(instance.waitedCerts), instance.waited)
+		logger.Warningf("ifExec:%v", instance.ifExec)
 		if instance.currentExec == nil{//当前没有再提交的区块
+			logger.Warningf("nil")
 			instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
 		}else{
+			logger.Warningf("not nil")
 			instance.waitedCerts = append(instance.waitedCerts)
 		}
 	
