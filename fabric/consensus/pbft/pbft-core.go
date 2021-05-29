@@ -215,6 +215,7 @@ type pbftCore struct {
 	clerkPrepares []uint64//计票节点存储收到的prepare消息
 	okNum int
 	
+	ifExec int
 	
 	
 	waitedCerts []*msgCert
@@ -381,6 +382,8 @@ func newPbftCore(id uint64, config *viper.Viper, consumer innerStack, etf events
 	instance.waitTimeout = instance.waitTimeout / 2
 	instance.clerkPrepares = []uint64{}
 	instance.okNum = 0
+	
+	instance.ifExec = 0
 	
 	
 	
@@ -1204,7 +1207,8 @@ func (instance *pbftCore) executeOutstanding2(view uint64, seq uint64) {
 		logger.Debugf("Replica %d not attempting to executeOutstanding because it is currently executing %d", instance.id, *instance.currentExec)
 		return
 	}*/
-	logger.Debugf("Replica %d attempting to executeOutstanding", instance.id)
+	logger.Infof("Replica %d attempting to executeOutstanding", instance.id)
+	instance.ifExec++
 
 	/*for idx := range instance.certStore {
 		if instance.executeOne(idx) {
