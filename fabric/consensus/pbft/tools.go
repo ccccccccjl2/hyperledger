@@ -695,7 +695,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		}
 	
 	if instance.id == uint64(0){
-		instance.startSelectTimer()
+		instance.startWaitTimer()
 	}
 	
 	
