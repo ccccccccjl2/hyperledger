@@ -186,6 +186,79 @@ func (op *obcBatch) sendVRF(){
 }
 
 
+
+func (instance *pbftCore) sendVRF(){
+	logger.Infof("ifSendVrf:%v", instance.ifSendVrf)
+	
+	if instance.ifSendVrf == false{
+		instance.ifKnowResult = false
+		instance.okNum = 0
+		
+		instance.ifSendVrf = true
+		//产生vrf随机数
+		m := make([]byte, 8)
+		binary.BigEndian.PutUint64(m, instance.id)
+		number, proof, epk := getVRF(m)
+		bpk, _ := PublicKeyToPEM(&epk)
+		
+		//封装vrf随机数和证明
+		num2 := []byte{}
+		for i := 0; i < len(number); i++{
+			num2 = append(num2, number[i])
+		}
+		//记录自己的vrf
+		flag := 0
+		for _, value := range(instance.vrf_peers){
+			if value == instance.id{
+				flag = 1
+				break
+			}
+		}
+		if flag == 0{
+			//校验节点可信度
+			s, ok := instance.scores[instance.id]
+			var level int = -6
+			if ok && s < level{
+				//节点不可信，将其vrf设为0
+				logger.Warningf("replica %d is not trusted", instance.id)
+				instance.vrf_peers[uint64(0)] = instance.id
+				instance.vrfs = append(instance.vrfs, uint64(0))
+			}else{
+				instance.vrf_peers[binary.BigEndian.Uint64(num2)] = instance.id
+				instance.vrfs = append(instance.vrfs, binary.BigEndian.Uint64(num2))
+			}	
+		}
+		
+		
+		data := []byte{}
+		data = append(data, m[7])
+		data = append(data, byte(instance.view))
+		for i := 0; i < len(number); i++{
+			data = append(data, number[i])
+		}
+		data = append(data, byte(len(proof)))
+		for i := 0; i < len(proof); i++{
+			data = append(data, proof[i])
+		}
+		for i := 0; i < len(bpk); i++{
+			data = append(data, bpk[i])
+		}
+		msg := &pb.Message{
+			Type: pb.Message_VRFPROVE,
+			Payload: data,
+		}
+
+		//发送消息
+		instance.consumer.broadcastToAll(msg)
+	}
+}
+
+
+
+
+
+
+
 func (op *obcBatch) selectLeaderAndDelegate(choice int){
 	//如果selectTimer开启，则发送vrf。否则进行选主
 	if op.selectTimerActive == true{
