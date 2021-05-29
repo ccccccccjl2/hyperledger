@@ -471,7 +471,9 @@ func (instance *pbftCore) ProcessEvent(e events.Event) events.Event {
 		instance.Checkpoint(update.seqNo, update.id)
 		instance.executeOutstanding()
 	case execDoneEvent:
-		instance.execDoneSync()
+		instance.execDoneSync2()
+		return nil
+		//instance.execDoneSync()
 		if instance.skipInProgress {
 			instance.retryStateTransfer(nil)
 		}
