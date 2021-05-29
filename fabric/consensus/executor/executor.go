@@ -97,7 +97,7 @@ func (co *coordinatorImpl) ProcessEvent(event events.Event) events.Event {
 		co.batchInProgress = false
 
 		info := co.rawExecutor.GetBlockchainInfo()
-		logge.Infof("info:%v", info)
+		logger.Infof("info:%v", info)
 
 		logger.Debugf("Committed block %d with hash %x to chain", info.Height-1, info.CurrentBlockHash)
 
