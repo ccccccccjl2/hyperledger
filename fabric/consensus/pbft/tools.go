@@ -586,6 +586,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		instance.ifSendFeedback = false
 		instance.prepares = []*Prepare3{}
 		instance.clerkPrepares = []uint64{}
+	instance.ifKnowResult = false
 		
 		//告诉其他节点自己已经共识成功
 		instance.okNum++
