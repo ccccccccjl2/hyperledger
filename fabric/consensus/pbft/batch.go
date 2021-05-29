@@ -520,7 +520,7 @@ func (op *obcBatch) ProcessEvent(event events.Event) events.Event {
 	case execDoneEvent:	
 		
 		op.pbft.ifKnowResult = false
-		op.pbft.okNum++
+		//op.pbft.okNum++
 		
 		res := op.pbft.ProcessEvent(event)
 		if res != nil{
@@ -529,15 +529,10 @@ func (op *obcBatch) ProcessEvent(event events.Event) events.Event {
 		
 		logger.Warningf("next consensused req:%v, amount req:%v", op.pbft.notConsensused, len(op.pbft.clientRequests))
 		
-		//如果有还没有共识的请求，则继续共识
-		if op.pbft.id == uint64(1){
-			logger.Infof("about ok,have %v, want %v", op.pbft.okNum, op.pbft.N)
-			if op.pbft.okNum == op.pbft.N{
-				if op.pbft.notConsensused < len(op.pbft.clientRequests){
-					logger.Infof("have reqs not-consensused, selecting new leader and clerks.")
-					op.sendVRF()
-				}
-			}
+		//如果有还没有提交的区块
+		if op.pbft.waited != len(op.pbft.waitCert){
+			cert := op.pbft.waitCert[op.pbft.waited]
+			op.pbft.execOutstanding2()
 		}
 		
 		
