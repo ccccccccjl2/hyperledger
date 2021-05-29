@@ -260,7 +260,7 @@ func (op *obcBatch) verifyVRF(event events.Event)(events.Event) {
 		}
 	logger.Infof("receive vrf from replica %v,len of vrfs: %v", uint64(data[0]), len(op.pbft.vrfs))
 		if op.pbft.ifSendVrf == false{//自己还没有发送vrf
-			op.pbft.ifSendVrf = true
+			
 			op.sendVRF()
 		}
 		
