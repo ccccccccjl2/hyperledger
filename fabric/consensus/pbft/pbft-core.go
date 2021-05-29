@@ -888,10 +888,10 @@ func (instance *pbftCore) recvPrePrepare(preprep *PrePrepare) error {
 	}
 	
 
-	if instance.primary(instance.view) != preprep.ReplicaId{
+	/*if instance.primary(instance.view) != preprep.ReplicaId{
 		logger.Warningf("Pre-prepare from other than primary: got %d, should be %d", preprep.ReplicaId, instance.primary(instance.view))
 		return nil
-	}
+	}*/
 
 	/*if !instance.inWV(preprep.View, preprep.SequenceNumber) {
 		if preprep.SequenceNumber != instance.h && !instance.skipInProgress {
