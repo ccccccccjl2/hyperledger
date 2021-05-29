@@ -215,10 +215,12 @@ func (h *Helper) CommitTxBatch(id interface{}, metadata []byte) (*pb.Block, erro
 	
 	ledger, err := ledger.GetLedger()
 	if err != nil {
+		logger.Errorf("Failed to get the ledger: %v", err)
 		return nil, fmt.Errorf("Failed to get the ledger: %v", err)
 	}
 	// TODO fix this one the ledger has been fixed to implement
 	if err := ledger.CommitTxBatch(id, h.curBatch, h.curBatchErrs, metadata); err != nil {
+		logger.Errorf("Failed to commit transaction to the ledger: %v", err)
 		return nil, fmt.Errorf("Failed to commit transaction to the ledger: %v", err)
 	}
 
