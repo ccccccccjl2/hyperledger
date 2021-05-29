@@ -343,16 +343,22 @@ func (op *obcBatch) processMessage(ocMsg *pb.Message, senderHandle *pb.PeerID) e
 	}
 	
 	if ocMsg.Type == pb.Message_COK{
-		op.pbft.okNum++
-		logger.Infof("receive ok,have %v, want %v", op.pbft.okNum, op.pbft.N)
-		
-		if op.pbft.okNum == op.pbft.N{//所有节点达成共识
-			if op.pbft.notConsensused < len(op.pbft.clientRequests){
-				op.pbft.okNum = 0
-				logger.Infof("have reqs not-consensused, selecting new leader and clerks.")
-				op.sendVRF()	
+		pview := uint64(ocMsg.Payload[0])
+		if pview >= op.pbft.view{
+			op.pbft.okNum++
+			logger.Infof("receive ok,have %v, want %v", op.pbft.okNum, op.pbft.N)
+
+			if op.pbft.okNum == op.pbft.N{//所有节点达成共识
+				if op.pbft.notConsensused < len(op.pbft.clientRequests){
+					op.pbft.okNum = 0
+					logger.Infof("have reqs not-consensused, selecting new leader and clerks.")
+					op.sendVRF()	
+				}
 			}
+		}else{
+			logger.Infof("ok from last view, ignore.")
 		}
+		
                 return nil
 	}
 	
