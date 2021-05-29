@@ -493,7 +493,7 @@ func (instance *pbftCore) dealFeedback(feedback *Feedback) error{
 	_, ok := instance.clerk[feedback.Id]
 	if !ok{
 		logger.Warningf("receive feedback not from clerk,ignore.")
-		return nil
+	//	return nil
 	}
 	if feedback.View != instance.view{
 		logger.Warningf("receive feedback from last view,ignore.")
