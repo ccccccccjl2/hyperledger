@@ -802,7 +802,7 @@ func (instance *pbftCore) sendPrePrepare(reqBatch *RequestBatch, digest string) 
 		}
 
 		logger.Debugf("Primary %d broadcasting pre-prepare for view=%d/seqNo=%d and digest %s", instance.id, instance.view, n, digest)
-		instance.seqNo += 1
+		//instance.seqNo += 1
 		preprep := &PrePrepare{
 			View:           instance.view,
 			SequenceNumber: n,
