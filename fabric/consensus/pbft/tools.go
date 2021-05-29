@@ -570,7 +570,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		}
 		instance.view += 1
 	
-	//	instance.seqNo += 1
+		instance.seqNo += 1
 	
 		instance.FeedbackNum = 0
 		instance.notConsensused += len(cert.prePrepare.RequestBatch.Batch) 
@@ -588,7 +588,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		instance.clerkPrepares = []uint64{}
 		
 		//告诉其他节点自己已经共识成功
-		//instance.okNum++
+		instance.okNum++
 		data1 := []byte{}
 		data1 = append(data1, byte(instance.view))
 		ocMsg := &pb.Message{
@@ -602,8 +602,8 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		instance.stopTimer()
 		instance.lastNewViewTimeout = instance.newViewTimeout
 		delete(instance.outstandingReqBatches, string(cert.prePrepare.BatchDigest))
-		//instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
-		instance.executeOutstanding()
+		instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
+		//instance.executeOutstanding()
 		if cert.prePrepare.SequenceNumber == instance.viewChangeSeqNo {
 			logger.Infof("Replica %d cycling view for seqNo=%d", instance.id,  cert.prePrepare.SequenceNumber)
 			instance.sendViewChange()
