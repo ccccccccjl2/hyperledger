@@ -80,7 +80,7 @@ func (co *coordinatorImpl) ProcessEvent(event events.Event) events.Event {
 		logger.Infof("Executed")
 		co.consumer.Executed(et.tag)
 	case commitEvent:
-		logger.Debug("Executor is processing an commitEvent")
+		logger.Infof("Executor is processing an commitEvent")
 		if co.skipInProgress {
 			logger.Error("Likely FATAL programming error, attempted to commit a transaction batch during state transfer")
 			return nil
@@ -97,6 +97,7 @@ func (co *coordinatorImpl) ProcessEvent(event events.Event) events.Event {
 		co.batchInProgress = false
 
 		info := co.rawExecutor.GetBlockchainInfo()
+		logge.Infof("info:%v", info)
 
 		logger.Debugf("Committed block %d with hash %x to chain", info.Height-1, info.CurrentBlockHash)
 
