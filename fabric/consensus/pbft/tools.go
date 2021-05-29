@@ -608,13 +608,13 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		
 		//instance.waitedCerts = append(instance.waitedCerts)
 		//logger.Warningf("waitedCerts:%v, waited:%v", len(instance.waitedCerts), instance.waited)
-		logger.Warningf("ifExec:%v", instance.ifExec)
-		if instance.currentExec == nil{//当前没有再提交的区块
+		//logger.Warningf("ifExec:%v", instance.ifExec)
+	if instance.currentExec == nil && instance.waited == len(instance.waitedCerts) - 1{//当前没有再提交的区块
 			logger.Warningf("nil")
 			instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
 		}else{
 			logger.Warningf("not nil")
-			instance.waitedCerts = append(instance.waitedCerts)
+			instance.waitedCerts = append(instance.waitedCerts, cert)
 		}
 	
 	
