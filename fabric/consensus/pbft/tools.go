@@ -622,7 +622,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		}
 	
 	
-	
+	instance.startSelectTimer()
 	
 	
 	
