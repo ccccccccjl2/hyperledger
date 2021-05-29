@@ -570,7 +570,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		}
 		instance.view += 1
 	
-		instance.seqNo += 1
+		//instance.seqNo += 1
 	
 		instance.FeedbackNum = 0
 		instance.notConsensused += len(cert.prePrepare.RequestBatch.Batch) 
