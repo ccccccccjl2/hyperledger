@@ -599,7 +599,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 			Type:    pb.Message_COK,
 			Payload: data1,
 		}
-		instance.consumer.unicastToOne(ocMsg, uint64(1))
+		instance.consumer.unicastToOne(ocMsg, uint64(0))
 			
 		//上链
 		logger.Warningf("ready to commit %d reqs this time.", len(cert.prePrepare.RequestBatch.Batch))
