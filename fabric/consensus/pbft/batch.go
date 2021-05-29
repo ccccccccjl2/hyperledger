@@ -343,8 +343,9 @@ func (op *obcBatch) processMessage(ocMsg *pb.Message, senderHandle *pb.PeerID) e
 	}
 	
 	if ocMsg.Type == pb.Message_COK{
-		logger.Infof("receive ok,have %v, want %v", op.pbft.okNum, op.pbft.N)
 		op.pbft.okNum++
+		logger.Infof("receive ok,have %v, want %v", op.pbft.okNum, op.pbft.N)
+		
 		if op.pbft.okNum == op.pbft.N{//所有节点达成共识
 			if op.pbft.notConsensused < len(op.pbft.clientRequests){
 				op.pbft.okNum = 0
