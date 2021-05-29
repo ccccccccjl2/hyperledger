@@ -215,6 +215,10 @@ type pbftCore struct {
 	clerkPrepares []uint64//计票节点存储收到的prepare消息
 	okNum int
 	
+	
+	
+	waitedCerts []*msgCert
+	waited int
 }
 
 type qidx struct {
@@ -378,7 +382,10 @@ func newPbftCore(id uint64, config *viper.Viper, consumer innerStack, etf events
 	instance.clerkPrepares = []uint64{}
 	instance.okNum = 0
 	
-
+	
+	
+	instance.waitedCerts = []*msgCert{}
+	instance.waited = 0
 	
 	
 
