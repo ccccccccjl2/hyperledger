@@ -62,7 +62,7 @@ func NewImpl(consumer consensus.ExecutionConsumer, rawExecutor PartialStack, stp
 func (co *coordinatorImpl) ProcessEvent(event events.Event) events.Event {
 	switch et := event.(type) {
 	case executeEvent:
-		logger.DeInfof("Executor is processing an executeEvent")
+		logger.Infof("Executor is processing an executeEvent")
 		if co.skipInProgress {
 			logger.Error("FATAL programming error, attempted to execute a transaction during state transfer")
 			return nil
