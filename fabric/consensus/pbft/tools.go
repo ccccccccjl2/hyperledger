@@ -602,8 +602,20 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		instance.stopTimer()
 		instance.lastNewViewTimeout = instance.newViewTimeout
 		delete(instance.outstandingReqBatches, string(cert.prePrepare.BatchDigest))
-		instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
+		//instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
 		//instance.executeOutstanding()
+	
+		if instance.currenExec == nil{//当前没有再提交的区块
+			instance.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
+		}else{
+			instance.waitedCert = append(instance.waitedCert)
+		}
+	
+	
+	
+	
+	
+	
 		if cert.prePrepare.SequenceNumber == instance.viewChangeSeqNo {
 			logger.Infof("Replica %d cycling view for seqNo=%d", instance.id,  cert.prePrepare.SequenceNumber)
 			instance.sendViewChange()
