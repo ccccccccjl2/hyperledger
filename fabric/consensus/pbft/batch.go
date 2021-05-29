@@ -332,12 +332,14 @@ func (op *obcBatch) processMessage(ocMsg *pb.Message, senderHandle *pb.PeerID) e
 	}
 	
 	if ocMsg.Type == pb.Message_VRFPROVE{
-		if op.pbft.ifSendVrf == false{//自己还没有发送vrf
+		r := op.verifyVRF(ocMsg.Payload)
+		return r
+		//if op.pbft.ifSendVrf == false{//自己还没有发送vrf
 			//op.startSelectTimer()
 			//op.selectLeaderAndDelegate(1)
-			op.sendVRF()
-		}
-		return op.verifyVRF(ocMsg.Payload)
+		//	op.sendVRF()
+		//}
+		//return op.verifyVRF(ocMsg.Payload)
 	}
 	
 	if ocMsg.Type == pb.Message_COK{
