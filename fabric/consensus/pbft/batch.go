@@ -343,6 +343,7 @@ func (op *obcBatch) processMessage(ocMsg *pb.Message, senderHandle *pb.PeerID) e
 	}
 	
 	if ocMsg.Type == pb.Message_COK{
+		return nil
 		pview := uint64(ocMsg.Payload[0])
 		if pview >= op.pbft.view{
 			op.pbft.okNum++
