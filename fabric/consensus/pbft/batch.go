@@ -530,9 +530,10 @@ func (op *obcBatch) ProcessEvent(event events.Event) events.Event {
 		logger.Warningf("next consensused req:%v, amount req:%v", op.pbft.notConsensused, len(op.pbft.clientRequests))
 		
 		//如果有还没有提交的区块
-		if op.pbft.waited != len(op.pbft.waitCert){
-			cert := op.pbft.waitCert[op.pbft.waited]
-			op.pbft.execOutstanding2()
+		if op.pbft.waited != len(op.pbft.waitedCerts){
+			cert := op.pbft.waitedCerts[op.pbft.waited]
+			op.pbft.waited++
+			op.pbft.executeOutstanding2(cert.prePrepare.View, cert.prePrepare.SequenceNumber)
 		}
 		
 		
