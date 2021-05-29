@@ -259,9 +259,9 @@ func (op *obcBatch) execute(seqNo uint64, reqBatch *RequestBatch) {
 			logger.Warningf("Batch replica %d could not unmarshal transaction %s", op.pbft.id, err)
 			continue
 		}
-		logger.Infof("Batch replica %d executing request with transaction %s from outstandingReqs, seqNo=%d", op.pbft.id, tx.Txid, seqNo)
+		//logger.Infof("Batch replica %d executing request with transaction %s from outstandingReqs, seqNo=%d", op.pbft.id, tx.Txid, seqNo)
 		if outstanding, pending := op.reqStore.remove(req); !outstanding || !pending {
-			logger.Infof("Batch replica %d missing transaction %s outstanding=%v, pending=%v", op.pbft.id, tx.Txid, outstanding, pending)
+			//logger.Infof("Batch replica %d missing transaction %s outstanding=%v, pending=%v", op.pbft.id, tx.Txid, outstanding, pending)
 		}
 		txs = append(txs, tx)
 		op.deduplicator.Execute(req)
