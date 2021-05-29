@@ -538,6 +538,15 @@ func (op *obcBatch) ProcessEvent(event events.Event) events.Event {
 		
 		logger.Warningf("next consensused req:%v, amount req:%v", op.pbft.notConsensused, len(op.pbft.clientRequests))
 		logger.Warningf("waitedCerts:%v, waited:%v,", len(op.pbft.waitedCerts), op.pbft.waited)
+		
+		if op.pbft.okNum == op.pbft.N{//所有节点达成共识
+			if op.pbft.notConsensused < len(op.pbft.clientRequests){
+				op.pbft.okNum = 0
+				logger.Infof("have reqs not-consensused, selecting new leader and clerks.")
+				op.sendVRF()	
+			}
+		}
+		
 		//如果有还没有提交的区块
 		if op.pbft.waited != len(op.pbft.waitedCerts){
 			cert := op.pbft.waitedCerts[op.pbft.waited]
