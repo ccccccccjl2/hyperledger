@@ -482,8 +482,8 @@ func (instance *pbftCore) recvPrepareClerk(prep *Prepare) error {
 				
 				//计票员自己肯定知道结果
 				instance.FeedbackNum++
-				//if instance.FeedbackNum >= len(instance.clerk){
-				if instance.FeedbackNum >= 1{
+				if instance.FeedbackNum >= len(instance.clerk){
+				//if instance.FeedbackNum >= 1{
 					
 					instance.dealFeedback(feedback)
 				}
@@ -579,8 +579,8 @@ func (instance *pbftCore) dealFeedback(feedback *Feedback) error{
 	
 	instance.stopClerkFeedbackTimer()
 	instance.FeedbackNum++
-	//if instance.FeedbackNum >= len(instance.clerk){
-	if instance.FeedbackNum >= 1{
+	if instance.FeedbackNum >= len(instance.clerk){
+	//if instance.FeedbackNum >= 1{
 		
 		instance.ifKnowResult = true
 		logger.Infof("replica %d receive enough prepare-feedback", instance.id)
