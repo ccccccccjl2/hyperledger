@@ -520,7 +520,7 @@ func (instance *pbftCore) ProcessEvent(e events.Event) events.Event {
 	case waitTimeoutEvent:
 		//cert := instance.getCert(instance.view, instance.pseq)
 		//instance.prepareFeedback(cert)
-		instance.sendVRF()
+		instance.sendVRF2()
 				
 	case *Feedback:
 		err = instance.dealFeedback(et)
