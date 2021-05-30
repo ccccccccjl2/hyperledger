@@ -481,12 +481,13 @@ func (instance *pbftCore) recvPrepareClerk(prep *Prepare) error {
 				//instance.prepareFeedback(cert)
 				
 				//计票员自己肯定知道结果
-				instance.FeedbackNum++
-				if instance.FeedbackNum >= len(instance.clerk){
+				instance.dealFeedback(feedback)
+				//instance.FeedbackNum++
+				//if instance.FeedbackNum >= len(instance.clerk){
 				//if instance.FeedbackNum >= 1{
 					
-					instance.dealFeedback(feedback)
-				}
+					
+				//}
 				
 			}
 		
