@@ -728,7 +728,9 @@ func (instance *pbftCore) sendPrepare2() error{
 		BatchDigest:    instance.pdigest,
 		ReplicaId:      instance.id,
 	}
-	return instance.innerBroadcast(&Message{Payload: &Message_Prepare2{Prepare2: prep}}, 2)
+	
+	return instance.consumer.broadcast(&Message{Payload: &Message_Prepare2{Prepare2: prep}})
+	//return instance.innerBroadcast(&Message{Payload: &Message_Prepare2{Prepare2: prep}}, 2)
 }
 
 
