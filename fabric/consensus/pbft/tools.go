@@ -728,8 +728,14 @@ func (instance *pbftCore) sendPrepare2() error{
 		BatchDigest:    instance.pdigest,
 		ReplicaId:      instance.id,
 	}
-	
-	return instance.consumer.broadcast(&Message{Payload: &Message_Prepare2{Prepare2: prep}})
+	msg := &Message{Payload: &Message_Prepare2{Prepare2: prep}}
+	msgRaw, err := proto.Marshal(msg)
+	if err != nil{
+		logger.Errorf("errors when sending ask.%v", err)
+		return nil
+	}
+	instance.consumer.broadcast(msgRaw)
+	return nil
 	//return instance.innerBroadcast(&Message{Payload: &Message_Prepare2{Prepare2: prep}}, 2)
 }
 
