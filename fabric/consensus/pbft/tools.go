@@ -187,8 +187,8 @@ func (op *obcBatch) sendVRF(){
 
 
 
-func (instance *pbftCore) sendVRF(){
-	logger.Infof("ifSendVrf:%v", instance.ifSendVrf)
+func (instance *pbftCore) sendVRF2(){
+	logger.Infof("ifSendVrf2:%v", instance.ifSendVrf)
 	
 	if instance.ifSendVrf == false{
 		instance.ifKnowResult = false
@@ -673,7 +673,13 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 			Payload: data1,
 		}
 		instance.consumer.unicastToOne(ocMsg, uint64(0))
-			
+		
+	
+		if instance.id == uint64(0){
+			instance.startWaitTimer()
+		}
+	
+	
 		//上链
 		logger.Warningf("ready to commit %d reqs this time.", len(cert.prePrepare.RequestBatch.Batch))
 		instance.stopTimer()
@@ -694,9 +700,7 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 			instance.waitedCerts = append(instance.waitedCerts, cert)
 		}
 	
-	//if instance.id == uint64(0){
-	//	instance.startWaitTimer()
-	//}
+	
 	
 	
 	
