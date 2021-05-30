@@ -676,8 +676,14 @@ func (instance *pbftCore) commitBatch(view uint64, seq uint64) error{
 		
 	
 		if instance.id == uint64(0){
-			instance.startWaitTimer()
+			logger.Warningf("next consensused req:%v, amount req:%v", op.pbft.notConsensused, len(op.pbft.clientRequests))
+			if instance.notConsensused < len(instance.clientRequests){
+				instance.startWaitTimer()
+			}	
 		}
+	
+	
+	
 	
 	
 		//上链
