@@ -150,7 +150,7 @@ func (op *obcBatch) sendVRF(){
 			//校验节点可信度
 			s, ok := op.pbft.scores[op.pbft.id]
 			var level int = -6
-			if ok && s < level{
+			if ok && s <= level{
 				//节点不可信，将其vrf设为0
 				logger.Warningf("replica %d is not trusted", op.pbft.id)
 				op.pbft.vrf_peers[uint64(0)] = op.pbft.id
@@ -218,7 +218,7 @@ func (instance *pbftCore) sendVRF2(){
 			//校验节点可信度
 			s, ok := instance.scores[instance.id]
 			var level int = -6
-			if ok && s < level{
+			if ok && s <= level{
 				//节点不可信，将其vrf设为0
 				logger.Warningf("replica %d is not trusted", instance.id)
 				instance.vrf_peers[uint64(0)] = instance.id
