@@ -296,7 +296,7 @@ func (op *obcBatch) verifyVRF(event events.Event)(events.Event) {
 		//校验节点可信度
 		s, ok := op.pbft.scores[uint64(data[0])]
 		var level int = -6
-		if ok && s < level{
+		if ok && s <= level{
 			//节点不可信，将其vrf设为0
 			logger.Warningf("replica %v is not trusted", uint64(data[0]))
 			op.pbft.vrf_peers[uint64(0)] = uint64(data[0])
