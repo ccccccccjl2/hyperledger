@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-const defaultTimeout = time.Second * 3
+const defaultTimeout = time.Second * 30
 
 var commLogger = logging.MustGetLogger("comm")
 
